@@ -1,4 +1,3 @@
-#include <math.h>
 const int latchPin = 3;
 const int clockPin = 4;
 const int dataPin = 2;
