@@ -24,7 +24,6 @@ void loop() {
       Serial.println(index);
       velOutput(index);
     }
-
   }
 }
 
