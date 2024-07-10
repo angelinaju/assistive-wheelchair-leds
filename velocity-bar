@@ -18,7 +18,7 @@ void loop() {
 
      char vel = Serial.read();
       
-     if (vel >= '0' && vel <= '9') {
+     if (vel >= '0' && vel <= '8') {
       int index = vel - '0'; 
       Serial.print("Change velocity: ");
       Serial.println(index);
