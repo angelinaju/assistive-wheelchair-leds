@@ -1,0 +1,5 @@
+Shift Register Wiring & Sample Code: https://docs.arduino.cc/tutorials/communication/guide-to-shift-out/#the-circuit
+
+-do not include capacitor
+
+Charlieplexing Wiring: http://razzpisampler.oreilly.com/ch04.html#:~:text=Solution,Figure%204%2D2
