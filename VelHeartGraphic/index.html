@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="dist/gauge.js"></script>
+    <style>
+        body{
+            margin: 0px;
+        }
+        .velProgContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            column-gap: 5px;
+            width: 100%;
+            height: 10vh;
+        }
+        .velProg {
+            background-color: rgb(106, 106, 106);
+            width: 75px;
+            height: 30%;
+            transition: background-color 0.3s;
+        }
+        #startSeg {
+            border-radius: 5px 0px 0px 5px;
+        }
+        #endSeg {
+            border-radius: 0px 5px 5px 0px;
+        }
+        .heartBeatContainer{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 200px;
+        }
+        #HeartRate{
+            font-size: 20px;
+            text-align: center;
+            font-family: sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="velProgContainer">
+        <div class="velProg" id="startSeg"></div>
+        <div class="velProg"></div>
+        <div class="velProg"></div>
+        <div class="velProg"></div>
+        <div class="velProg"></div>
+        <div class="velProg"></div>
+        <div class="velProg"></div>
+        <div class="velProg" id="endSeg"></div>
+    </div>
+
+
+    <div class="heartBeatContainer">
+        <canvas id="demo"></canvas>
+        <div id="HeartRate"></div>
+    </div>
+    
+    <script>
+        const heartRate = document.getElementById('HeartRate');
+        const velProg = document.querySelectorAll('.velProg');
+
+
+
+        var opts = {
+            // color configs
+            colorStart: "#6fadcf",
+            colorStop: void 0,
+            gradientType: 0,
+            strokeColor: "#e0e0e0",
+            generateGradient: true,
+            percentColors: [[0.0, "#a9d70b" ], [0.50, "#f9c802"], [1.0, "#ff0000"]],
+            // customize pointer
+            pointer: {
+              length: 0.5,
+              strokeWidth: 0.035,
+              iconScale: 1.0
+            },
+            // static labels
+            staticLabels: {
+              font: "10px sans-serif",
+              labels: [0, 30, 60, 90, 120, 150, 180],
+              fractionDigits: 0
+            },
+            // static zones
+            staticZones: [
+              {strokeStyle: "#F03E3E", min: 0, max: 30},
+              {strokeStyle: "#FFDD00", min: 30, max: 60},
+              {strokeStyle: "#30B32D", min: 60, max: 120},
+              {strokeStyle: "#FFDD00", min: 120, max: 150},
+              {strokeStyle: "#F03E3E", min: 150, max: 180}
+            ],
+            // render ticks
+            renderTicks: {
+              divisions: 6,
+              divWidth: 1.1,
+              divLength: 0.7,
+              divColor: "#333333",
+              subDivisions: 3,
+              subLength: 0.5,
+              subWidth: 0.6,
+              subColor: "#666666"
+            },
+            // the span of the gauge arc
+            angle: 0.05,
+            // line thickness
+            lineWidth: 0.44,
+            // radius scale
+            radiusScale: 1.0,
+            // font size
+            fontSize: 40,
+            // if false, max value increases automatically if value > maxValue
+            limitMax: true,
+            // if true, the min value of the gauge will be fixed
+            limitMin: false,
+            // High resolution support
+            highDpiSupport: true
+        };
+        var target = document.getElementById('demo'); 
+        var gauge = new Gauge(target).setOptions(opts);
+        gauge.maxValue = 180;
+        gauge.setMinValue(0);
+        gauge.set(0); 
+        gauge.animationSpeed = 32;
+        
+        function setHeartBeat(beat){
+            gauge.set(beat);
+            heartRate.textContent = `HeartRate: ${beat}`;
+        }
+
+        function setVelProg(progIndx){
+            for(let i = 0; i <= progIndx; i++){
+                velProg[i].style.backgroundColor = 'blue';
+            }
+            for(let i = progIndx + 1; i <= velProg.length; i++){
+                velProg[i].style.backgroundColor = 'grey';
+            }
+        }
+
+
+        function runExample(){
+            for(let i = 0; i <= 180; i++){
+                setTimeout(() => {
+                    setHeartBeat(i);
+                }, i * 100);
+
+            }
+            for(let i = 0; i < 8; i++){
+                setTimeout(() => {
+                    setVelProg(i);
+                }, i * 1000);
+            }
+        }
+
+        runExample();
+    </script>
+</body>
+</html>
